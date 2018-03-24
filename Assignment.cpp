@@ -88,8 +88,8 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 	loadTGA("resources/skybox/plains-of-abraham_dn.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
 }
@@ -165,22 +165,38 @@ void drawSkybox()
   /////////////////////// FLOOR //////////////////////////
   glBindTexture(GL_TEXTURE_2D, texId[5]);
   glBegin(GL_QUADS);
-  glTexCoord2f(0, 1);
+  glTexCoord2f(0, 20.0);
   glVertex3f(-1000, 0., 1000);
   glTexCoord2f(0, 0);
   glVertex3f(1000, 0.,  1000);
-  glTexCoord2f(1, 0);
+  glTexCoord2f(20.0, 0);
   glVertex3f(1000, 0., -1000);
-  glTexCoord2f(1, 1);
+  glTexCoord2f(20.0, 20.0);
   glVertex3f(-1000, 0., -1000);
   glEnd();
 }
 
 void drawHouse()
 {
+    glColor4f(0.0, 1.0, 1.0, 1.0);
     glPushMatrix();
-        glColor4f(1.0, 0, 0, 1.0);
-        glTranslatef(0, 5, -50);
+        glTranslatef(0, 5, -40);
+        glScalef(2, 1, 0.1);
+        glutSolidCube(10);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslatef(-9.5, 5, -50);
+        glScalef(0.1, 1, 2);
+        glutSolidCube(10);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0, 5, -60);
+        glScalef(2, 1, 0.1);
+        glutSolidCube(10);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslatef(9.5, 5, -50);
+        glScalef(0.1, 1, 2);
         glutSolidCube(10);
     glPopMatrix();
 }
