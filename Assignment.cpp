@@ -176,28 +176,57 @@ void drawSkybox()
   glEnd();
 }
 
+void roof()
+{
+    glBegin(GL_TRIANGLES);
+        glVertex3f(1.0f, 0.0f, -1.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(-1.0f, 0.0f, -1.0f);
+        
+        glVertex3f(-1.0f, 0.0f, -1.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(-1.0f, 0.0f, 1.0f);
+        
+        glVertex3f(-1.0f, 0.0f, 1.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, 0.0f, 1.0f);
+        
+        glVertex3f(1.0f, 0.0f, 1.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, 0.0f, -1.0f);
+    glEnd();
+}
+
 void drawHouse()
 {
-    glColor4f(0.0, 1.0, 1.0, 1.0);
-    glPushMatrix();
+    //Walls
+    glColor3f(0.0, 1.0, 1.0);
+    glPushMatrix(); //front
         glTranslatef(0, 5, -40);
         glScalef(2, 1, 0.1);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix();
+    glPushMatrix(); //left
         glTranslatef(-9.5, 5, -50);
         glScalef(0.1, 1, 2);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix();
+    glPushMatrix(); //back
         glTranslatef(0, 5, -60);
         glScalef(2, 1, 0.1);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix();
+    glPushMatrix(); //right
         glTranslatef(9.5, 5, -50);
         glScalef(0.1, 1, 2);
         glutSolidCube(10);
+    glPopMatrix();
+    //Roof
+    glColor3f(1.0, 1.0, 1.0);
+    glPushMatrix();
+        glTranslatef(0, 10, -50);
+        glScalef(10, 5, 10.5);
+        roof();
     glPopMatrix();
 }
 
