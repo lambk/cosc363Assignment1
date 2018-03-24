@@ -16,7 +16,39 @@ float cam_x = 0.0;
 float cam_z = 0.0;
 float cdr=3.14159265/180.0;
 
+
+//dog vars
+float dog_leg_rate = 1.5;
+float dog_leg_angle = 0.0;
+float dog_leg_dir = 1;
+float dog_wag_rate = 3.0;
+float dog_wag_angle = 0.0;
+float dog_wag_dir = 1;
+
+float dog_walk_pos = 0.0;
+float dog_walk_speed = 0.2;
+float dog_walk_dir = 0;
+
 GLuint texId[6];
+
+void timer(int value)
+{   //dog animations
+    if (dog_leg_dir == 1) dog_leg_angle += dog_leg_rate; else dog_leg_angle -= dog_leg_rate;
+    if (dog_leg_angle >= 15.0) dog_leg_dir = 0;
+    if (dog_leg_angle <= -15.0) dog_leg_dir = 1;
+    if (dog_wag_dir == 1) dog_wag_angle += dog_wag_rate; else dog_wag_angle -= dog_wag_rate;
+    if (dog_wag_angle >= 30.0) dog_wag_dir = 0;
+    if (dog_wag_angle <= -30.0) dog_wag_dir = 1;
+    
+    //dog travel
+    if (dog_walk_dir == 1) dog_walk_pos += dog_walk_speed; else dog_walk_pos -= dog_walk_speed;
+    if (dog_walk_pos >= 60) dog_walk_dir = 0;
+    if (dog_walk_pos <= -60) dog_walk_dir = 1;
+    
+    glutPostRedisplay();
+    glutTimerFunc(10, timer, 0);
+}
+
 
 void drawFloor()
 {
@@ -100,39 +132,39 @@ void drawSkybox()
   glBindTexture(GL_TEXTURE_2D, texId[0]);
   glBegin(GL_QUADS);
   glTexCoord2f(0, 0);
-  glVertex3f(-1000,  0, 1000);
+  glVertex3f(-1000,  -400, 1000);
   glTexCoord2f(1, 0);
-  glVertex3f(-1000, 0., -1000);
+  glVertex3f(-1000, -400., -1000);
   glTexCoord2f(1, 1);
-  glVertex3f(-1000, 1000., -1000);
+  glVertex3f(-1000, 600., -1000);
   glTexCoord2f(0, 1);
-  glVertex3f(-1000, 1000, 1000);
+  glVertex3f(-1000, 600, 1000);
   glEnd();
 
   ////////////////////// FRONT WALL ///////////////////////
   glBindTexture(GL_TEXTURE_2D, texId[1]);
   glBegin(GL_QUADS);
   glTexCoord2f(0, 0);
-  glVertex3f(-1000,  0, -1000);
+  glVertex3f(-1000,  -400, -1000);
   glTexCoord2f(1, 0);
-  glVertex3f(1000, 0., -1000);
+  glVertex3f(1000, -400., -1000);
   glTexCoord2f(1, 1);
-  glVertex3f(1000, 1000, -1000);
+  glVertex3f(1000, 600, -1000);
   glTexCoord2f(0, 1);
-  glVertex3f(-1000,  1000, -1000);
+  glVertex3f(-1000,  600, -1000);
   glEnd();
 
  ////////////////////// RIGHT WALL ///////////////////////
   glBindTexture(GL_TEXTURE_2D, texId[2]);
   glBegin(GL_QUADS);
   glTexCoord2f(0, 0);
-  glVertex3f(1000,  0, -1000);
+  glVertex3f(1000,  -400, -1000);
   glTexCoord2f(1, 0);
-  glVertex3f(1000, 0, 1000);
+  glVertex3f(1000, -400, 1000);
   glTexCoord2f(1, 1);
-  glVertex3f(1000, 1000,  1000);
+  glVertex3f(1000, 600,  1000);
   glTexCoord2f(0, 1);
-  glVertex3f(1000,  1000,  -1000);
+  glVertex3f(1000,  600,  -1000);
   glEnd();
 
 
@@ -140,26 +172,26 @@ void drawSkybox()
   glBindTexture(GL_TEXTURE_2D, texId[3]);
   glBegin(GL_QUADS);
   glTexCoord2f(0, 0);
-  glVertex3f( 1000, 0, 1000);
+  glVertex3f( 1000, -400, 1000);
   glTexCoord2f(1, 0);
-  glVertex3f(-1000, 0,  1000);
+  glVertex3f(-1000, -400,  1000);
   glTexCoord2f(1, 1);
-  glVertex3f(-1000, 1000,  1000);
+  glVertex3f(-1000, 600,  1000);
   glTexCoord2f(0, 1);
-  glVertex3f( 1000, 1000, 1000);
+  glVertex3f( 1000, 600, 1000);
   glEnd();
   
   /////////////////////// TOP //////////////////////////
   glBindTexture(GL_TEXTURE_2D, texId[4]);
   glBegin(GL_QUADS);
   glTexCoord2f(1, 0);
-  glVertex3f(-1000, 1000, -1000);
+  glVertex3f(-1000, 600, -1000);
   glTexCoord2f(1, 1);
-  glVertex3f(1000, 1000,  -1000);
+  glVertex3f(1000, 600,  -1000);
   glTexCoord2f(0, 1);
-  glVertex3f(1000, 1000,  1000);
+  glVertex3f(1000, 600,  1000);
   glTexCoord2f(0, 0);
-  glVertex3f(-1000, 1000, 1000);
+  glVertex3f(-1000, 600, 1000);
   glEnd();
   
   /////////////////////// FLOOR //////////////////////////
@@ -200,33 +232,157 @@ void roof()
 void drawHouse()
 {
     //Walls
-    glColor3f(1.0, 0.0, 0.0);
-    glPushMatrix(); //front
-        glTranslatef(0, 5, -40);
-        glScalef(2, 1, 0.1);
+    //front
+    glPushMatrix(); //patio
+        glColor3f(0.0, 1.4, 1.4);
+        glTranslatef(0, 0, -36);
+        glScalef(12, 1, 8);
+        glutSolidCube(1);
+    glPopMatrix();
+    glColor3f(0.8, 0.5, 0.0);
+    glPushMatrix(); //doorway top
+        glTranslatef(0, 18, -40);
+        glScalef(4, 2, 1);
+        glutSolidCube(2);
+    glPopMatrix();    
+    glPushMatrix(); //left of doorway
+        glTranslatef(-12, 10, -40);
+        glScalef(1.6, 2, 0.2);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix(); //left
-        glTranslatef(-9.5, 5, -50);
-        glScalef(0.1, 1, 2);
+    glPushMatrix(); //right of doorway
+        glTranslatef(12, 10, -40);
+        glScalef(1.6, 2, 0.2);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix(); //back
-        glTranslatef(0, 5, -60);
-        glScalef(2, 1, 0.1);
+    //left
+    glPushMatrix(); 
+        glTranslatef(-19, 10, -60);
+        glScalef(0.2, 2, 4);
         glutSolidCube(10);
     glPopMatrix();
-    glPushMatrix(); //right
-        glTranslatef(9.5, 5, -50);
-        glScalef(0.1, 1, 2);
+    //back
+    glPushMatrix();
+        glTranslatef(0, 10, -80);
+        glScalef(4, 2, 0.2);
+        glutSolidCube(10);
+    glPopMatrix();
+    //right
+    glPushMatrix();
+        glTranslatef(19, 10, -60);
+        glScalef(0.2, 2, 4);
+        glutSolidCube(10);
+    glPopMatrix();
+    //floor
+    glPushMatrix();
+        glColor3f(0.8, 0.8, 0.8);
+        glTranslatef(0, 0, -60);
+        glScalef(3.8, 0.1, 4);
         glutSolidCube(10);
     glPopMatrix();
     //Roof
-    glColor3f(1.0, 0.8, 1.0);
+    glColor3f(0.5, 0.8, 0.8);
     glPushMatrix();
-        glTranslatef(0, 10, -50);
-        glScalef(10, 5, 10.5);
+        glTranslatef(0, 20, -60);
+        glScalef(22, 20, 23);
         roof();
+    glPopMatrix();
+}
+
+void drawDog()
+{
+    //body
+    glColor3f(0.8, 0.7, 0.2);
+    glPushMatrix();
+        glScalef(1, 0.3, 0.3);
+        glutSolidCube(5);
+    glPopMatrix();
+    //head
+    glPushMatrix();
+        glTranslatef(-3, 0, 0);
+        glPushMatrix(); 
+            glutSolidCube(1.1);
+        glPopMatrix();
+        glPushMatrix(); //left ear
+            glTranslatef(0, 0.9, 0.3);
+            glScalef(0.05, 0.5, 0.3);
+            glutSolidCube(1);
+        glPopMatrix();
+        glPushMatrix(); //right ear
+            glTranslatef(0, 0.9, -0.3);
+            glScalef(0.05, 0.5, 0.3);
+            glutSolidCube(1);
+        glPopMatrix();
+        glPushMatrix(); //snoot
+            glTranslatef(-0.9, -0.25, 0);
+            glScalef(0.8, 0.5, 0.5);
+            glutSolidCube(1);
+        glPopMatrix();
+        glPushMatrix(); //left eye
+            glColor3f(1, 1, 1);
+            glTranslatef(-0.55, 0.3, 0.3);
+            glScalef(0.2, 1, 1);
+            glutSolidCube(0.25);
+            glPushMatrix();
+                glColor3f(0, 0, 0);
+                glTranslatef(-0.2, 0, -0.05);
+                glutSolidCube(0.15);
+            glPopMatrix();
+        glPopMatrix();
+        glPushMatrix(); //right eye
+            glColor3f(1, 1, 1);
+            glTranslatef(-0.55, 0.3, -0.3);
+            glScalef(0.2, 1, 1);
+            glutSolidCube(0.25);
+            glPushMatrix();
+                glColor3f(0, 0, 0);
+                glTranslatef(-0.2, 0, 0.05);
+                glutSolidCube(0.15);
+            glPopMatrix();
+        glPopMatrix();
+    glPopMatrix();
+    
+    glColor3f(0.8, 0.7, 0.2); //color reset
+    //tail
+    glPushMatrix();
+        glTranslatef(2.3, 0.55, 0);
+        glRotatef(dog_wag_angle, 0, 1, 0);
+        glRotatef(30, 0, 0, 1);
+        glTranslatef(1.5, 0, 0);
+        glScalef(3, 0.5, 0.5);
+        glutSolidCube(1);
+    glPopMatrix();
+    //fl leg
+    glPushMatrix();
+        glTranslatef(-2.2, -0.75, 0.45);
+        glRotatef(dog_leg_angle, 0, 0, 1);
+        glTranslatef(0, -1, 0);
+        glScalef(0.5, 2, 0.5);
+        glutSolidCube(1);
+    glPopMatrix();
+    //fr leg
+    glPushMatrix();
+        glTranslatef(-2.2, -0.75, -0.45);
+        glRotatef(-dog_leg_angle, 0, 0, 1);
+        glTranslatef(0, -1, 0);
+        glScalef(0.5, 2, 0.5);
+        glutSolidCube(1);
+    glPopMatrix();
+    //bl leg
+    glPushMatrix();
+        glTranslatef(2.2, -0.75, 0.45);
+        glRotatef(dog_leg_angle, 0, 0, 1);
+        glTranslatef(0, -1, 0);
+        glScalef(0.5, 2, 0.5);
+        glutSolidCube(1);
+    glPopMatrix();
+    //br leg
+    glPushMatrix();
+        glTranslatef(2.2, -0.75, -0.45);
+        glRotatef(-dog_leg_angle, 0, 0, 1);
+        glTranslatef(0, -1, 0);
+        glScalef(0.5, 2, 0.5);
+        glutSolidCube(1);
     glPopMatrix();
 }
 
@@ -246,9 +402,20 @@ void display()
 
 	//drawFloor();
     glDisable(GL_LIGHTING);
+    glEnable(GL_TEXTURE_2D);
     drawSkybox();
     glEnable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
     drawHouse();
+    
+    glPushMatrix();
+        glTranslatef(dog_walk_pos, 0, 0);
+        glTranslatef(0, 5, -10);
+        if (dog_walk_dir == 1) {
+            glRotatef(180, 0, 1, 0);
+        }
+        drawDog();
+    glPopMatrix();
     
     glColor4f(1.0, 1.0, 1.0, 1.0);
     
@@ -277,7 +444,6 @@ void initialize()
     glMaterialf(GL_FRONT, GL_SHININESS, 50);
     
 	glEnable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D);
 	glEnable(GL_NORMALIZE);
 
 	glMatrixMode(GL_PROJECTION);
@@ -288,15 +454,15 @@ void initialize()
 
 void special(int key, int x, int y)
 {
-    if(key == GLUT_KEY_LEFT) cam_angle += 2;
-    else if(key == GLUT_KEY_RIGHT) cam_angle -= 2;
+    if(key == GLUT_KEY_LEFT) cam_angle += 4;
+    else if(key == GLUT_KEY_RIGHT) cam_angle -= 4;
 	else if(key == GLUT_KEY_UP) {
-        cam_z -= (1*cos(cam_angle * cdr));
-        cam_x -= (1*sin(cam_angle * cdr));
+        cam_z -= (2*cos(cam_angle * cdr));
+        cam_x -= (2*sin(cam_angle * cdr));
     }
 	else if(key == GLUT_KEY_DOWN){
-        cam_z += (1*cos(cam_angle * cdr));
-        cam_x += (1*sin(cam_angle * cdr));
+        cam_z += (2*cos(cam_angle * cdr));
+        cam_x += (2*sin(cam_angle * cdr));
     }
     
 	glutPostRedisplay();
@@ -311,6 +477,7 @@ int main(int argc, char** argv)
    glutCreateWindow ("Assignment 1");
    initialize();
 
+   glutTimerFunc(10, timer, 0);
    glutSpecialFunc(special); 
    glutDisplayFunc(display);
    glutMainLoop();
