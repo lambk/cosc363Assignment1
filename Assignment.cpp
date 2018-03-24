@@ -11,7 +11,7 @@ using namespace std;
 
 #define GL_CLAMP_TO_EDGE 0x812F 
 float cam_angle = 0.0;
-float cam_height = 20.0;
+float cam_height = 10.0;
 float cam_x = 0.0;
 float cam_z = 0.0;
 float cdr=3.14159265/180.0;
@@ -85,7 +85,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** down ***
 	glBindTexture(GL_TEXTURE_2D, texId[5]);
-	loadTGA("resources/skybox/plains-of-abraham_dn.tga");
+	loadTGA("resources/skybox/grass.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
@@ -165,13 +165,13 @@ void drawSkybox()
   /////////////////////// FLOOR //////////////////////////
   glBindTexture(GL_TEXTURE_2D, texId[5]);
   glBegin(GL_QUADS);
-  glTexCoord2f(0, 20.0);
+  glTexCoord2f(0, 200.0);
   glVertex3f(-1000, 0., 1000);
   glTexCoord2f(0, 0);
   glVertex3f(1000, 0.,  1000);
-  glTexCoord2f(20.0, 0);
+  glTexCoord2f(200.0, 0);
   glVertex3f(1000, 0., -1000);
-  glTexCoord2f(20.0, 20.0);
+  glTexCoord2f(200.0, 200.0);
   glVertex3f(-1000, 0., -1000);
   glEnd();
 }
@@ -200,7 +200,7 @@ void roof()
 void drawHouse()
 {
     //Walls
-    glColor3f(0.0, 1.0, 1.0);
+    glColor3f(1.0, 0.0, 0.0);
     glPushMatrix(); //front
         glTranslatef(0, 5, -40);
         glScalef(2, 1, 0.1);
@@ -222,7 +222,7 @@ void drawHouse()
         glutSolidCube(10);
     glPopMatrix();
     //Roof
-    glColor3f(1.0, 1.0, 1.0);
+    glColor3f(1.0, 0.8, 1.0);
     glPushMatrix();
         glTranslatef(0, 10, -50);
         glScalef(10, 5, 10.5);
