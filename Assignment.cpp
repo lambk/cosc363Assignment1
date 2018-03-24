@@ -204,7 +204,9 @@ void display()
     drawSkybox();
     glEnable(GL_LIGHTING);
     drawHouse();
-
+    
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    
 	glFlush();
 }
 
