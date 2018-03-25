@@ -42,8 +42,8 @@ void timer(int value)
     
     //dog travel
     if (dog_walk_dir == 1) dog_walk_pos += dog_walk_speed; else dog_walk_pos -= dog_walk_speed;
-    if (dog_walk_pos >= 60) dog_walk_dir = 0;
-    if (dog_walk_pos <= -60) dog_walk_dir = 1;
+    if (dog_walk_pos >= 17) dog_walk_dir = 0;
+    if (dog_walk_pos <= -17) dog_walk_dir = 1;
     
     glutPostRedisplay();
     glutTimerFunc(10, timer, 0);
@@ -414,7 +414,7 @@ void display()
     glPopMatrix();
     glPushMatrix();
         glTranslatef(dog_walk_pos, 0, 0);
-        glTranslatef(0, 2.75, -10);
+        glTranslatef(0, 3.25, -100);
         if (dog_walk_dir == 1) {
             glRotatef(180, 0, 1, 0);
         }
