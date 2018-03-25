@@ -235,55 +235,55 @@ void drawHouse()
     //front
     glPushMatrix(); //patio
         glColor3f(0.0, 1.4, 1.4);
-        glTranslatef(0, 0, -36);
+        glTranslatef(0, 0, 24);
         glScalef(12, 1, 8);
         glutSolidCube(1);
     glPopMatrix();
     glColor3f(0.8, 0.5, 0.0);
     glPushMatrix(); //doorway top
-        glTranslatef(0, 18, -40);
+        glTranslatef(0, 18, 20);
         glScalef(4, 2, 1);
         glutSolidCube(2);
     glPopMatrix();    
     glPushMatrix(); //left of doorway
-        glTranslatef(-12, 10, -40);
+        glTranslatef(-12, 10, 20);
         glScalef(1.6, 2, 0.2);
         glutSolidCube(10);
     glPopMatrix();
     glPushMatrix(); //right of doorway
-        glTranslatef(12, 10, -40);
+        glTranslatef(12, 10, 20);
         glScalef(1.6, 2, 0.2);
         glutSolidCube(10);
     glPopMatrix();
     //left
     glPushMatrix(); 
-        glTranslatef(-19, 10, -60);
+        glTranslatef(-19, 10, 0);
         glScalef(0.2, 2, 4);
         glutSolidCube(10);
     glPopMatrix();
     //back
     glPushMatrix();
-        glTranslatef(0, 10, -80);
+        glTranslatef(0, 10, -20);
         glScalef(4, 2, 0.2);
         glutSolidCube(10);
     glPopMatrix();
     //right
     glPushMatrix();
-        glTranslatef(19, 10, -60);
+        glTranslatef(19, 10, 0);
         glScalef(0.2, 2, 4);
         glutSolidCube(10);
     glPopMatrix();
     //floor
     glPushMatrix();
         glColor3f(0.8, 0.8, 0.8);
-        glTranslatef(0, 0, -60);
+        glTranslatef(0, 0, 0);
         glScalef(3.8, 0.1, 4);
         glutSolidCube(10);
     glPopMatrix();
     //Roof
     glColor3f(0.5, 0.8, 0.8);
     glPushMatrix();
-        glTranslatef(0, 20, -60);
+        glTranslatef(0, 20, 0);
         glScalef(22, 20, 23);
         roof();
     glPopMatrix();
@@ -388,7 +388,7 @@ void drawDog()
 
 void display()  
 {
-	float lpos[4] = {-40, 50, -80, 1.0};  //light's position
+	float lpos[4] = {-200, 50, -200, 1.0};  //light's position
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);    //GL_LINE = Wireframe;   GL_FILL = Solid
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -406,11 +406,15 @@ void display()
     drawSkybox();
     glEnable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
-    drawHouse();
     
     glPushMatrix();
+        glTranslatef(0, 0, -80);
+        glScalef(1.8, 1, 1.8);
+        drawHouse();
+    glPopMatrix();
+    glPushMatrix();
         glTranslatef(dog_walk_pos, 0, 0);
-        glTranslatef(0, 5, -10);
+        glTranslatef(0, 2.75, -10);
         if (dog_walk_dir == 1) {
             glRotatef(180, 0, 1, 0);
         }
