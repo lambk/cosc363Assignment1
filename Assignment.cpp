@@ -49,29 +49,6 @@ void timer(int value)
     glutTimerFunc(10, timer, 0);
 }
 
-
-void drawFloor()
-{
-	bool flag = false;
-
-	glBegin(GL_QUADS);
-	glNormal3f(0, 1, 0);
-	for(int x = -400; x <= 400; x += 5)
-	{
-		for(int z = -400; z <= 400; z += 5)
-		{
-			if(flag) glColor3f(0.5, 0.8, 0.3);
-			else glColor3f(0.3, 0.8, 0.3);
-			glVertex3f(x, 0, z);
-			glVertex3f(x, 0, z+5);
-			glVertex3f(x+5, 0, z+5);
-			glVertex3f(x+5, 0, z);
-			//if (x % 3 == 0 && z % 3 == 0) flag = true; else flag = false;
-		}
-	}
-	glEnd();
-}
-
 void loadGLTextures()				// Load bitmaps And Convert To Textures
 {    
 	glGenTextures(6, texId); 		// Create texture ids
@@ -229,6 +206,30 @@ void roof()
     glEnd();
 }
 
+void drawFloor()
+{
+    float white[4] = {1., 1., 1., 1.};
+	float black[4] = {0};
+	glColor4f(0.9, 0.9, 0.9, 1.0);  //The floor is gray in colour
+	glNormal3f(0.0, 1.0, 0.0);
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR, black);
+	glBegin(GL_QUADS);
+    float step = 0.5;
+	for(float i = -19.0; i < 19.0; i+=step)
+	{
+		for(float j = -20.0;  j < 20.0; j+=step)
+		{
+			glVertex3f(i, 0.5, j);
+			glVertex3f(i, 0.5, j+step);
+			glVertex3f(i+step, 0.5, j+step);
+			glVertex3f(i+step, 0.5, j);
+		}
+	}
+	glEnd();
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+}
+
 void drawHouse()
 {
     //Walls
@@ -273,13 +274,6 @@ void drawHouse()
         glScalef(0.2, 2, 4);
         glutSolidCube(10);
     glPopMatrix();
-    //floor
-    glPushMatrix();
-        glColor3f(0.8, 0.8, 0.8);
-        glTranslatef(0, 0, 0);
-        glScalef(3.8, 0.1, 4);
-        glutSolidCube(10);
-    glPopMatrix();
     //Roof
     glColor3f(0.5, 0.8, 0.8);
     glPushMatrix();
@@ -287,6 +281,14 @@ void drawHouse()
         glScalef(22, 20, 23);
         roof();
     glPopMatrix();
+    //floor
+    //glPushMatrix();
+    //    glColor3f(0.8, 0.8, 0.8);
+    //    glTranslatef(0, 0, 0);
+    //    glScalef(3.8, 0.1, 4);
+    //    glutSolidCube(10);
+    //glPopMatrix();
+    drawFloor();
 }
 
 void drawDog()
@@ -389,6 +391,8 @@ void drawDog()
 void display()  
 {
 	float lpos[4] = {-200, 50, -200, 1.0};  //light's position
+    float spot_pos[] = {0.0f, 30.0f, -80.0f, 1.0f};
+    float spot_dir[] = {0, -1, 0};
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);    //GL_LINE = Wireframe;   GL_FILL = Solid
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -399,6 +403,8 @@ void display()
 	float zdir = -10000.0*cos(cam_angle*cdr);
 	gluLookAt(cam_x, cam_height, cam_z, xdir, cam_height, zdir, 0, 1, 0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lpos);   //set light position
+    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_dir);
+    glLightfv(GL_LIGHT1, GL_POSITION, spot_pos); 
 
 	//drawFloor();
     glDisable(GL_LIGHTING);
@@ -433,6 +439,7 @@ void initialize()
 
 	glEnable(GL_LIGHTING);					//Enable OpenGL states
 	glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
     
     float grey[4] = {0.2, 0.2, 0.2, 1.0};
     float white[4]  = {1.0, 1.0, 1.0, 1.0};
@@ -440,6 +447,13 @@ void initialize()
     glLightfv(GL_LIGHT0, GL_AMBIENT, grey);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
     glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+    
+    glLightfv(GL_LIGHT1, GL_AMBIENT, grey);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, white);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, white);
+    
+    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 70.0);
+    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT,10);
     
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
