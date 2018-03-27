@@ -1,0 +1,60 @@
+Kyle Lamb
+37831171
+
+My scene includes a small house within a scene surrounded by a skybox. The house is made with glut objects for the walls and vertex definitions for the roof and floor. The houes contains an animated dog with a spotlight attached that walks along a predefined path, an animated plane with particle effects that flies in circles, a helicopter that takes off/lands, moves along the x axis, and slowly turns to look at the camera. It also contains a surface of revolution that rotates in the middle of the scene and a hyperbolic paraboloid that floats in the center.
+
+Dog + attached spotlight
+
+The dog has animated legs and a wagging tail. The dog first navigates along the -x axis until it reaches a certain point (x=-17), then along the 34 units along the +z axis, at which point it returns along the path it travelled. The dog (and the attached spotlight) rotates based on which direction it is currently travelling.
+
+Surface of revolution
+
+The surface of revolution rotates in the center of the house. It contains 36 "slices" and each slice is made up of the following y values (going from center to edge): 0, 1, 2, 1, 0, 1, -1, 0, 0.5, 0.6
+
+Plane
+
+The plane is made up of glu cylinders for the main fuselage and vertex definitions for the wings and horizontal/vertical stabilisers. It is displaced from the center of the room by 15 units and rotates in the anticlockwise direction (as viewed from above) at this fixed radius of 15 units. 
+
+Particles
+
+Particles of fire/exhaust appear behind the plane. They are made up of cones that have randomised horizontal/vertical offsets.
+
+Helicopter
+
+The helicopter takes off, moves along the x axis, and then lands. It then repeats the process moving along the opposite x direction. At all times, the helicopter rotates to face toward the normal camera position. This is done through comparing the x and z values of the helicopter and camera, and then using conditionals and trigonometry to determine which bearing the helicopter should face (with bearing 000 being in the -x direction - simply because that is the direction in which the helicopter faced based on its construction).
+
+The equation used to calculate the angle is shown below:
+
+TODO
+
+Hyperbolic parabaloid
+
+The hyperbolic parabaloid is constructed using fixed x and z intervals, where the model is then constructed by calculating the next y value as determined by the following equation:
+
+y = c*(z^2/a^2 - x^2/b^2) 
+
+The paraboloid models this function between -15 <= x <= 15 and -15 <= z <= 15
+
+These values are then used to construct the quad strips used to form the model, and normal vectors are set.
+
+The whole model then rotates slowly and floats up and down based on a sine function of an increasing variable (para_height)
+
+First person view
+
+The camera can be toggled between being a controllable camera to a first person view of the dogs perspective using the F1 key. when toggling between the normal and first person camera, the position and direction of the normal camera view is maintained. While the camera is in the first person view, camera controls for the moving and rotating the normal camera view is disabled.
+
+Challenges
+
+One primary challenge I had was modelling the hyperbolic parabaloid. At first I was using two nested for loops and plotting the points according to the function, however this did not allow for creating a solid/attached model. 
+
+I realised I would have to model it with either triangle or quad strips, and thus had to plot the vertex points in a certain order. Upon deciding to use quad trips due to the simplicity of the vertex ordering, I then had to create position arrays for the y values of each strip, as I needed to know the current y value and next y value. This ended up working well, and I could correctly register the normal vector by following the process from the lectures. In the end the parabaloid was constructed using strips along the x direction that were layered from -z to +z.
+
+Controls
+
+The controls for interacting with the scene are as followed:
+
+Up/Down moves the normal camera position forward and backward respectively.
+Left/Right rotates the normal camera to the left and right respectively.
+F1 toggles between the normal and first person camera modes.
+
+

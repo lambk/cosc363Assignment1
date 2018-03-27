@@ -74,7 +74,7 @@ float calcHeliAngleToPlayer()
 	} else {
 		if (diffz > 0 && diffx < 0) angle = atan(diffz / -diffx) / cdr;
 		if (diffz > 0 && diffx > 0) angle = 180.0 - atan(diffz / diffx) / cdr;
-		if (diffz < 0 && diffx < 0) angle = angle = -atan(diffz / diffx) / cdr;
+		if (diffz < 0 && diffx < 0) angle = -atan(diffz / diffx) / cdr;
 		if (diffz < 0 && diffx > 0) angle = 180.0 + atan(-diffz / diffx) / cdr;
 	}
 	if (angle >= 360.0) angle -= 360.0;
@@ -155,7 +155,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 	glGenTextures(9, texId); 		// Create texture ids
 	// *** left ***
 	glBindTexture(GL_TEXTURE_2D, texId[0]);
-	loadTGA("source/resources/skybox/plains-of-abraham_rt.tga");
+	loadTGA("resources/skybox/plains-of-abraham_rt.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -163,7 +163,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** front ***
 	glBindTexture(GL_TEXTURE_2D, texId[1]);
-	loadTGA("source/resources/skybox/plains-of-abraham_ft.tga");
+	loadTGA("resources/skybox/plains-of-abraham_ft.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -171,7 +171,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** right ***
 	glBindTexture(GL_TEXTURE_2D, texId[2]);
-	loadTGA("source/resources/skybox/plains-of-abraham_lf.tga");
+	loadTGA("resources/skybox/plains-of-abraham_lf.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -179,7 +179,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** back***
 	glBindTexture(GL_TEXTURE_2D, texId[3]);
-	loadTGA("source/resources/skybox/plains-of-abraham_bk.tga");
+	loadTGA("resources/skybox/plains-of-abraham_bk.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -187,7 +187,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** top ***
 	glBindTexture(GL_TEXTURE_2D, texId[4]);
-	loadTGA("source/resources/skybox/plains-of-abraham_up.tga");
+	loadTGA("resources/skybox/plains-of-abraham_up.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -195,7 +195,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** down ***
 	glBindTexture(GL_TEXTURE_2D, texId[5]);
-	loadTGA("source/resources/skybox/grass.tga");
+	loadTGA("resources/skybox/grass.tga");
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
@@ -203,7 +203,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** roof ***
 	glBindTexture(GL_TEXTURE_2D, texId[6]);
-	loadTGA("source/resources/roof.tga");
+	loadTGA("resources/roof.tga");
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -211,7 +211,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** para ***
 	glBindTexture(GL_TEXTURE_2D, texId[7]);
-	loadTGA("source/resources/para.tga");
+	loadTGA("resources/para.tga");
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -219,7 +219,7 @@ void loadGLTextures()				// Load bitmaps And Convert To Textures
 
 	// *** carpet ***
 	glBindTexture(GL_TEXTURE_2D, texId[8]);
-	loadTGA("source/resources/carpet.tga");
+	loadTGA("resources/carpet.tga");
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -628,8 +628,6 @@ void drawPlane()
 
 void drawHPara()
 {
-	float y;
-	float y2;
 	float c = 0.6;
 	float a = 3.0;
 	float b = 3.0;
@@ -788,7 +786,7 @@ void display()
     glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(0, 1, -80);
+		glTranslatef(0, 1.5, -80);
 		glRotatef(sor_angle, 0, 1, 0);
 		glScalef(1, 1, 1);
 		drawSoR();
@@ -806,7 +804,7 @@ void display()
 	glPushMatrix();
 	glTranslatef(0, 2*sin(para_height), -80);
 	glRotatef(para_angle, 0, 1, 0);
-	glTranslatef(0, 8, 0);
+	glTranslatef(0, 10, 0);
 	glScalef(0.3, 0.3, 0.3);
 	drawHPara();
 	glPopMatrix();
