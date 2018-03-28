@@ -18,16 +18,16 @@ float cdr=3.14159265/180.0;
 int fpv = 0;
 
 //dog vars
-float dog_leg_rate = 1.5;
+float dog_leg_rate = 3;
 float dog_leg_angle = 0.0;
 float dog_leg_dir = 1;
-float dog_wag_rate = 3.0;
+float dog_wag_rate = 6.0;
 float dog_wag_angle = 0.0;
 float dog_wag_dir = 1;
 
 float dog_walk_posx = 0.0;
 float dog_walk_posz = 0.0;
-float dog_walk_speed = 0.2;
+float dog_walk_speed = 0.4;
 int dog_walk_dir = 0;
 int dog_walk_angles[4] = { 0, 90, 270, 180 };
 
@@ -50,7 +50,7 @@ int heli_mode = 0;
 float heli_height = 0.0;
 float heli_posx = 0.0;
 float heli_angle = 0.0;
-float heli_tracking_speed = 0.2; //How 'fast' the heli tracks the player, a high value will result in the heli looking directly at you even when moving perpendicular at close distances
+float heli_tracking_speed = 0.6; //How 'fast' the heli tracks the player, a high value will result in the heli looking directly at you even when moving perpendicular at close distances
 
 GLuint texId[9];
 
@@ -109,9 +109,9 @@ void timer(int value)
 	}
 	
 
-	sor_angle += 0.5;
+	sor_angle += 1;
 
-	plane_angle += 1;
+	plane_angle += 2;
 	if (fmod(plane_angle, 10.0) < 1) {
 		plane_smoke_1x = ((rand() % 10) / 10.0) - 0.5;
 		plane_smoke_1y = ((rand() % 10) / 10.0) - 0.5;
@@ -121,14 +121,14 @@ void timer(int value)
 		plane_smoke_3y = ((rand() % 10) / 10.0) - 0.5;
 	}
 
-	para_height += 0.01;
-	para_angle++;
+	para_height += 0.02;
+	para_angle += 2;
     
-	rotor_angle += 7;
-	if (heli_mode == 0) heli_height += 0.04;
-	if (heli_mode == 1) heli_posx -= 0.1;
-	if (heli_mode == 2) heli_height -= 0.04;
-	if (heli_mode == 3) heli_posx += 0.1;
+	rotor_angle += 14;
+	if (heli_mode == 0) heli_height += 0.08;
+	if (heli_mode == 1) heli_posx -= 0.2;
+	if (heli_mode == 2) heli_height -= 0.08;
+	if (heli_mode == 3) heli_posx += 0.2;
 	if (heli_mode == 0 && heli_height >= 10.0) {
 		if (heli_posx >= 0.0) heli_mode = 1; else heli_mode = 3;
 	}
@@ -147,7 +147,7 @@ void timer(int value)
 	}
 
     glutPostRedisplay();
-    glutTimerFunc(10, timer, 0);
+    glutTimerFunc(30, timer, 0);
 }
 
 void loadGLTextures()				// Load bitmaps And Convert To Textures
@@ -679,6 +679,11 @@ void drawHeli()
 	glTranslatef(3.5, 1.5, 0);
 	glScalef(0.3, 1.2, 0.2);
 	glutSolidCube(1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(3.5, 1.5, 0);
+	glutSolidTorus(0.1, 0.4, 20, 20);
 	glPopMatrix();
 
 	glColor3f(0, 0, 0);

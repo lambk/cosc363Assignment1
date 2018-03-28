@@ -1,9 +1,0 @@
-skybox: http://www.custommapmakers.org/skyboxes.php (mp_plains)
-
-grass: https://www.turbosquid.com/FullPreview/Index.cfm/ID/579132
-
-roof: http://www.plaintextures.com/singletexture.php?urlcode=SODWZ86QR6Q8Sf99WJtChSPlKnuH5cw08%2BrT6gePhhlK0bftGslALvIwApKbMveyv%2FBknBM7ou8iIL7%2Bfjj3uw%3D%3D
-
-para: http://www.wildtextures.com/free-textures/just-a-seamless-retro-paper/
-
-carpet: https://www.turbosquid.com/FullPreview/Index.cfm/ID/667298
